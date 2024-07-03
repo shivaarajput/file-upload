@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Upload and Delete Image</title>
+</head>
+<body>
+    <h1>Upload a new File</h1>
+    <form method="post" action="{{ url_for('upload_file') }}" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <h1>Uploaded Files</h1>
+    <ul>
+    {% for file in files %}
+        <li>
+            <a href="{{ url_for('static', filename='uploads/' + file) }}">{{ file }}</a>
+            <a href="{{ url_for('delete_file', filename=file) }}">Delete</a>
+        </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
